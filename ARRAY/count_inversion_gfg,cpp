@@ -1,0 +1,121 @@
+long long int merge(long long arr[], long long const l, long long const m, long long const r)
+
+{
+
+  long long n1=m-l+1;
+
+  long long n2=r-m;
+
+  long long arr1[n1];
+
+  long long arr2[n2];
+
+  for(int i=0;i<n1;i++)
+
+    {
+
+      arr1[i]=arr[i+l];
+
+    }
+
+  for(int i=0;i<n2;i++)
+
+    {
+
+      arr2[i]=arr[i+m+1];
+
+    }
+
+  long long i=0,j=0, k=l;
+
+  long long count=0;
+
+  while(i<n1 && j<n2)
+
+    {
+
+      if(arr1[i]>arr2[j])
+
+      {
+
+          arr[k]=arr2[j];
+
+          j++;
+
+          count+=n1-i;
+
+      }
+
+       else
+
+      {
+
+          arr[k]=arr1[i];
+
+        i++;
+
+      }
+
+      k++;
+
+    }
+
+  while(i<n1)
+
+    {
+
+      arr[k]=arr1[i];
+
+      i++;
+
+      k++;
+
+    }
+
+  while(j<n2)
+
+    {
+
+      arr[k]=arr2[j];
+
+      j++;
+
+      k++;
+
+    }
+
+    return count;
+
+}
+
+long long int mergesort(long long arr[], long long const bgin, long long const end)
+
+{
+
+  long long count=0;
+
+  if(bgin<end)
+
+  {
+
+  auto mid=bgin+(end-bgin)/2;
+
+  count+=mergesort(arr, bgin, mid);
+
+  count+=mergesort(arr, mid+1, end);
+
+  count+=merge(arr, bgin, mid, end);
+
+  }
+
+  return count;
+
+}
+
+    long long int inversionCount(long long arr[], long long N)
+
+    {
+
+        return mergesort(arr, 0, N-1);
+
+    }
